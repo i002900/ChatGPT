@@ -2,16 +2,20 @@
 import os
 import openai
 from dotenv import load_dotenv
-
+from openai import OpenAI
 
 #Variables
 load_dotenv()
 API_KEY = os.getenv('CHATGPT_API_KEY')
 model = "gpt-5"
 
+#Initialize Client proxy
+if API_KEY:
+    client = OpenAI(api_key = API_KEY)
+
 def get_completion(prompt, model="gpt-3.5-turbo"):
     messages = [{"role": "user", "content": prompt}] # Updated API call for openai>=1.0.0
-    response = openai.chat.completions.create(
+    response = client.chat.completions.create(
     model=model,
     messages=messages,
       temperature=0, # This is the degree of randomness
